@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Calendar Of Events</string>
+    <string name="add">ВНЕСТИ</string>
+    <string name="review">ПРОССМОТРЕТЬ</string>
+    <string name="reset">СБРОС</string>
+    <string name="data">ПО ДАТЕ</string>
+    <string name="search">ПО МЕСЯЦУ</string>
+    <string name="editTextInput"> введите слово </string>
+    <string name="dialog_message">dialog_message</string>
+    <string name="dialog_title">dialog_title</string>
+    <string name="toolbar_name">Калькулятор часов</string>
+
+</resources>
