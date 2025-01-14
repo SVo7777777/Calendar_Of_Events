@@ -17,6 +17,11 @@ public class CustomDialogFragment extends DialogFragment {
                 .setTitle("ВНИМАНИЕ!")
                 .setMessage("ЗАПИСЬ УСПЕШНО ВНЕСЕНА!")
                 .setPositiveButton("OK", null)
+                .setNegativeButton("",null)
+
+
+
                 .create();
     }
 }
+
