@@ -42,13 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private Object MotionEvent;
     boolean addRecord;
     boolean exi;
-    boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
+    //boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -65,44 +64,12 @@ public class MainActivity extends AppCompatActivity {
         textMultiline.setText(CiDateTime);
         addRecord = false;
         editTextInput = findViewById(R.id.editTextInput);
-
-        //FileEmpty file = new FileEmpty();
-
-
-        System.out.println(exists);
-        if (exists){
-            System.out.println("файл существует");
-            exi = true;
-        }else{
-            System.out.println("файл не существует");
-            exi = false;
-        }
-
-//        try {
-//            System.out.println(FileEmpty.check());
-//        } catch (FileNotFoundException e) {
-//            try (FileOutputStream fos = openFileOutput("event_diary.txt", MODE_APPEND);
-//             OutputStreamWriter osw = new OutputStreamWriter(fos)) {
-//            osw.write(CiDateTime+"\n");
-//            } catch (IOException n) {
-//                throw new RuntimeException(n);
-//            }
-//            throw new RuntimeException(e);
-//        }
-
-        //создаём файл "event_diary." и записываем текущую дату
-//        try (FileOutputStream fos = openFileOutput("event_diary.txt", MODE_APPEND);
-//             OutputStreamWriter osw = new OutputStreamWriter(fos)) {
-//            osw.write(CiDateTime+"\n");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
         //поиск по слову  по нажатию на ENTER или OK
         editTextInput.setOnKeyListener(new View.OnKeyListener() {
             @SuppressLint("SetTextI18n")
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 boolean consumed = false;
+                boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
                 if (keyCode == KEYCODE_ENTER) {
                     Editable word = editTextInput.getText();//Делаем то, что нам нужно...
                     StringBuilder sb = new StringBuilder();
@@ -119,15 +86,14 @@ public class MainActivity extends AppCompatActivity {
                             }
                             textMultiline.setText(sb.toString());
                             if (sb.length() == 0) {
-                                textMultiline.setText("по слову: '" + word + "' ничего не найдено. Поппробуйте ввести первые несколько букв слова.");
+                                textMultiline.setText("По слову '" + word + "' ничего не найдено. Попробуйте ввести первые несколько букв слова.");
                             }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }else {
-                        textMultiline.setText("нет записей, сделайте запись и внесите её");
+                        textMultiline.setText("В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!");
                     }
-
                     consumed = true; //это если не хотим, чтобы нажатая кнопка обрабатывалась дальше видом, иначе нужно оставить false
                 }
                 return consumed;
@@ -144,14 +110,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     //добавяем запись в файл "event_diary.txt"
     public AlertDialog clickAdd(View view) throws FileNotFoundException {
-
         String data = String.valueOf(textMultiline.getText());
         if (!addRecord) {
-            Toast.makeText(this, "выберите дату, сделайте запись, а потом внесите ", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(this, "Выберите дату, запишите событие, а потом внесите! ", Toast.LENGTH_LONG).show();
         } else {
                 if  (data.length() >= 14){
                     try (FileOutputStream fos = openFileOutput("event_diary.txt", MODE_APPEND);
@@ -161,16 +124,12 @@ public class MainActivity extends AppCompatActivity {
                         //вывод диалогового окна, что запись внесена
                         CustomDialogFragment dialog2 = new CustomDialogFragment();
                         dialog2.show(getSupportFragmentManager(), "custom");
-
-                        //Toast.makeText(this, "запись внесена", Toast.LENGTH_LONG).show();
-
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
                     addRecord = false;
                 } else {
-                    Toast.makeText(this, "сделайте запись, а потом внесите ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Запишите событие, а потом внесите! ", Toast.LENGTH_LONG).show();
                 }
         }
         return null;
@@ -178,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     //проссмотр содержимого файла "event_diary.txt"
     public void clickReview(View view) {
         //считываем с файла всё что есть
+        boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
         addRecord = false;
         StringBuilder sb = new StringBuilder();
         if (exists) {
@@ -196,14 +156,14 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         }else{
-            Toast.makeText(this, "нет записей!\nсделайте запись и внесите её! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите! ", Toast.LENGTH_LONG).show();
             System.out.println("pass");
         }
     }
-
     //проссмотр по дате
     public void clickReviewData(View view) {
         addRecord = false;
+        boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
         String data = String.valueOf(textMultiline.getText());
         System.out.println(data.length());
         if (exists) {
@@ -222,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                             textMultiline.setText(infile);
                             break;
                         } else {
-                            textMultiline.setText(data + "нет записей в этот день");
+                            textMultiline.setText(data + "нет событий в этот день");
                         }
                     }
                 } catch (IOException e) {
@@ -233,11 +193,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("кнопка не работает");
             }
         }else {
-            Toast.makeText(this, "нет записей!\nсделайте запись и внесите её! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!", Toast.LENGTH_LONG).show();
             System.out.println("pass");
         }
     }
-
     //кнопка СБРОС-удаление всего из поля информации и запись текущей даты
     public void clickReset(View view) {
         addRecord = false;
@@ -246,12 +205,11 @@ public class MainActivity extends AppCompatActivity {
         editTextInput.setText("");
         String CiDateTime = ci.get(Calendar.DAY_OF_MONTH) + "-" + (ci.get(Calendar.MONTH) + 1) + "-" + ci.get(Calendar.YEAR) + ": ";
         textMultiline.setText(CiDateTime);
-
     }
-
     //проссмотр по месяцу
     public void clickReviewMonth(View view) {
         addRecord = false;
+        boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
         String data = String.valueOf(textMultiline.getText());
         System.out.println(data.length());
         if (exists) {
@@ -278,17 +236,17 @@ public class MainActivity extends AppCompatActivity {
                         textMultiline.setText(infile);
                     }
                     if (sb.length() == 0) {
-                        textMultiline.setText(data + "нет записей в этом месяце ");
+                        textMultiline.setText(data + "нет событий в этом месяце!");
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                Toast.makeText(this, "выберите дату на календаре", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Выберите дату на календаре!", Toast.LENGTH_LONG).show();
                 System.out.println("кнопка не работает");
             }
         }else {
-            Toast.makeText(this, "нет записей!\nсделайте запись и внесите её! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!", Toast.LENGTH_LONG).show();
 
         }
     }

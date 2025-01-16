@@ -10,5 +10,6 @@
     <string name="dialog_title">dialog_title</string>
     <string name="toolbar_name">Калькулятор часов</string>
     <string name="stroka">Вы сделали правильный выбор</string>
+    <string name="descript">input and output</string>
 
 </resources>
