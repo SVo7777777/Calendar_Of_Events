@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/editTextTextMultiLine8"
         android:layout_width="match_parent"
-        android:layout_height="226dp"
+        android:layout_height="214dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="1dp"
         android:background="@color/Wheat"
@@ -41,12 +41,14 @@
         android:inputType="textMultiLine"
         android:labelFor="@id/calendarView10"
         android:textColor="@color/Purple"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
 
     <LinearLayout
         android:id="@+id/button_container"
@@ -83,6 +85,15 @@
             android:textStyle="bold"
             app:cornerRadius="0dp" />
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/menu_review"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/months_container2"
@@ -158,25 +169,29 @@
             app:cornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonData" />
+
     </LinearLayout>
 
 
     <CalendarView
         android:id="@+id/calendarView10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="260dp"
         android:layout_marginBottom="5dp"
         android:background="@color/white"
-
         android:backgroundTint="@color/white_30"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Large"
         android:drawingCacheQuality="auto"
+        android:selectedWeekBackgroundColor="#ff0000"
         android:textDirection="locale"
         android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:weekNumberColor="#0000ff"
+        android:weekSeparatorLineColor="#00ff00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine8"
         app:layout_constraintVertical_bias="0.971" />
+
 
 </LinearLayout>
