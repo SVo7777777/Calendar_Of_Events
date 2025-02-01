@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextInput;
     private Object MotionEvent;
     boolean addRecord;
-    String[] data = {"проссмотреть", "проссмотреть за день", "проссмотреть за месяц", "проссмотреть за год"};
+    String[] data = {"ПРОССМОТРЕТЬ", "ПРОССМОТРЕТЬ ЗА ДЕНЬ", "ПРОССМОТРЕТЬ ЗА МЕСЯЦ", "ПРОССМОТРЕТЬ ЗА ГОД"};
     //boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //верхняя полоса с названием и 3мя точками
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // Use the toolbar as the app bar
 
+        //меню для кнопки "проссмотреть"
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) findViewById(R.id.menu_review);
@@ -76,26 +80,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                // показываем позиция нажатого элемента
+                //изменяем щрифт и цвет кнопки спиннера
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView) parent.getChildAt(0)).setTextSize(30);
+                ((TextView) parent.getChildAt(0)).setTextSize(20);
 
 
                 String data = String.valueOf(textMultiline.getText());
                 boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
                 if (exists) {
-                    if ((data.length() >= 10) && (data.length() <= 12)) {
-                        Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                    if ((data.length() >= 10) && (data.length() <= 12) ) {
+                        // показываем позиция нажатого элемента
+                        //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
                         switch (position) {
                             case 0:
                                 // Whatever you want to happen when the first item gets selected
                                 break;
                             case 1:
 
-                                Intent intent = new Intent(MainActivity.this, ReviewOData.class);
-                                intent.putExtra("data", data);
+                                System.out.println(data.length());
+                                int index_first = data.indexOf("-");
+                                //11-1-2025
+                                //поиск даты по виду 11-01-2025
+                                StringBuilder data2 = new StringBuilder(data);
+                                data2.insert(index_first+1, '0');
+                                System.out.println(data2);
+                                clickReviewData(data, String.valueOf(data2));
                                 spinner.setSelection(0);
-                                startActivity(intent);
+
                                 break;
                             case 2:
                                 Intent intent2 = new Intent(MainActivity.this, ReviewOnMonth.class);
@@ -103,14 +114,25 @@ public class MainActivity extends AppCompatActivity {
                                 spinner.setSelection(0);
                                 startActivity(intent2);
                                 break;
-
+                            case 3:
+                                Intent intent = new Intent(MainActivity.this, ReviewOYear.class);
+                                intent.putExtra("data", data);
+                                spinner.setSelection(0);
+                                startActivity(intent);
+                                break;
                         }
                     } else {
+                        if (position!=0){
                         Toast.makeText(getBaseContext(), "Выберите дату на календаре!", Toast.LENGTH_LONG).show();
                         System.out.println("кнопка не работает");
+                        spinner.setSelection(0);
+                        }else{
+                            System.out.println("кнопка не работает");
+                        }
                     }
                 } else {
                     Toast.makeText(getBaseContext(), "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!", Toast.LENGTH_LONG).show();
+                    spinner.setSelection(0);
                 }
             }
             @Override
@@ -124,7 +146,15 @@ public class MainActivity extends AppCompatActivity {
         //вывод текущей даты в поле информации при запуске приложения
         String CiDateTime = ci.get(Calendar.DAY_OF_MONTH) + "-" + (ci.get(Calendar.MONTH) + 1) + "-" + ci.get(Calendar.YEAR) + ": ";
         textMultiline.setText(CiDateTime);
-        addRecord = false;
+        //курсор в конце строки
+        textMultiline.requestFocus();
+        textMultiline.setSelection(textMultiline.getText().length());
+        Toast toast = Toast.makeText(getBaseContext(), " Выберите дату и запишите событие.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 200);
+        toast.show();
+
+        //public void setGravity (int gravity, int xOffset, int yOffset);
+        addRecord = true;
         editTextInput = findViewById(R.id.editTextInput);
         //поиск по слову  по нажатию на ENTER или OK
         editTextInput.setOnKeyListener(new View.OnKeyListener() {
@@ -169,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
                 addRecord = true;
                 curDate = String.valueOf(dayOfMonth + "-" + (month + 1) + "-" + year + ": ");
                 textMultiline.setText(curDate);
+                textMultiline.requestFocus();
+                textMultiline.setSelection(textMultiline.getText().length());
             }
         });
     }
@@ -181,6 +213,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (R.id.action_save == id) {
+            // Handle settings action
+            //Intent intent = new Intent(MainActivity.this, SaveActivity.class);
+            //startActivity(intent);
+            //вывод диалогового окна, что запись внесена
+            String data = String.valueOf(textMultiline.getText());
+            CustomDialogFragment dialog2 = new CustomDialogFragmentSave();
+            Bundle args = new Bundle();
+            args.putString("data", data);
+            dialog2.setArguments(args);
+            dialog2.show(getSupportFragmentManager(), "custom");
+            return true;
+        }
         if (R.id.action_settings == id) {
             // Handle settings action
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -195,14 +240,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //Например, MODE_PRIVATE — файл доступен только этому приложению, MODE_WORLD_READABLE — файл доступен для чтения всем, MODE_WORLD_WRITEABLE — файл доступен для записи всем, MODE_APPEND — файл будет дописан, а не начат заново.
     //добавяем запись в файл "event_diary.txt"
     public AlertDialog clickAdd(View view) throws FileNotFoundException {
         String data = String.valueOf(textMultiline.getText());
+        System.out.println(data);
         if (!addRecord) {
             Toast.makeText(this, "Выберите дату, запишите событие, а потом внесите! ", Toast.LENGTH_LONG).show();
         } else {
-                if  (data.length() >= 14){
+                if  (data.length() >= 20){
                     try (FileOutputStream fos = openFileOutput("event_diary.txt", MODE_APPEND);
                          OutputStreamWriter osw = new OutputStreamWriter(fos)) {
                         //String data = String.valueOf(textMultiline.getText());
@@ -222,43 +268,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //проссмотр по дате
-    public void clickReviewData(View view) {
+    @SuppressLint("SetTextI18n")
+    public void clickReviewData(String data, String data2) {
         addRecord = false;
-        boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
-        String data = String.valueOf(textMultiline.getText());
-        System.out.println(data.length());
-        if (exists) {
-            if ((data.length() >= 10) && (data.length() <= 12)) {
-                //считываем с файла всё что есть
-                StringBuilder sb = new StringBuilder();
-                try (FileInputStream fis = openFileInput("event_diary.txt");
-                     InputStreamReader isr = new InputStreamReader(fis);
-                     BufferedReader br = new BufferedReader(isr)) {
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        boolean contains = line.contains(data);
-                        if (contains) {
-                            sb.append(line);
-                            String infile = sb.toString();
-                            textMultiline.setText(infile);
-                            break;
-                        } else {
-                            textMultiline.setText(data + "нет событий в этот день");
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+
+        //считываем с файла всё что есть
+        StringBuilder sb = new StringBuilder();
+        try (FileInputStream fis = openFileInput("event_diary.txt");
+             InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr)) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                boolean contains = line.contains(data);
+                boolean contains2 = line.contains(data2);
+                if ((contains) || (contains2)) {
+                    sb.append(line + "\n");
+
                 }
-            } else {
-                Toast.makeText(this, "выберите дату на календаре", Toast.LENGTH_LONG).show();
-                System.out.println("кнопка не работает");
+
+
+
             }
-        }else {
-            Toast.makeText(this, "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!", Toast.LENGTH_LONG).show();
-            System.out.println("pass");
+            textMultiline.setText(sb.toString());
+            if (sb.length() == 0) {
+                textMultiline.setText(data + " нет событий за этот день!");
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     //кнопка СБРОС-удаление всего из поля информации и запись текущей даты
+
     public void clickReset(View view) {
         addRecord = false;
         Calendar ci = Calendar.getInstance();
@@ -277,7 +320,11 @@ public class MainActivity extends AppCompatActivity {
             if ((data.length() >= 10) && (data.length() <= 12)) {
                 int index_first = data.indexOf("-");
                 int index_second = data.indexOf("-", index_first + 1);
-                String month = data.substring(index_first, index_second + 5);
+                String month = data.substring(index_first, index_second + 5);//-1-2025
+                //поиск месяца по виду -01-2025
+                StringBuilder month2 = new StringBuilder(month);
+                month2.insert(1, '0');
+                System.out.println(month2);
                 //считываем с файла всё что есть
                 StringBuilder sb = new StringBuilder();
                 try (FileInputStream fis = openFileInput("event_diary.txt");

@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@color/white_30"
+    android:background="@color/Wheat"
     android:backgroundTintMode="multiply"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,16 +24,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
-
 
     <EditText
         android:id="@+id/editTextTextMultiLine8"
         android:layout_width="match_parent"
-        android:layout_height="214dp"
+        android:layout_height="210dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/Wheat"
+        android:background="@color/white"
         android:contentDescription="@string/data"
         android:ems="10"
         android:gravity="start|top"
@@ -49,7 +49,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
-
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
@@ -61,39 +60,39 @@
             android:id="@+id/buttonAdd"
             style="@style/ShapeAppearanceOverlay.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="clickAdd"
             android:text="@string/add"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             app:cornerRadius="0dp"
             tools:ignore="OnClick" />
 
         <Button
-            android:id="@+id/buttonReview"
+            android:id="@+id/buttonReset"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="2dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="clickReview"
-            android:text="@string/review"
+            android:onClick="clickReset"
+            android:text="@string/reset"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             app:cornerRadius="0dp" />
     </LinearLayout>
 
     <Spinner
         android:id="@+id/menu_review"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:background="@color/white"
         android:backgroundTint="?attr/colorPrimary"
         android:textAlignment="center"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/months_container2"
@@ -101,31 +100,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonReset"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="clickReset"
-            android:text="@string/reset"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:cornerRadius="0dp" />
-
-        <Button
-            android:id="@+id/buttonData"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="2dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="clickReviewData"
-            android:text="@string/data"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:cornerRadius="0dp" />
 
     </LinearLayout>
 
@@ -139,7 +113,7 @@
         <EditText
             android:id="@+id/editTextInput"
             android:layout_width="165dp"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_marginStart="0dp"
             android:layout_marginRight="2dp"
             android:layout_weight="0.5"
@@ -153,22 +127,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonReset" />
 
-        <Button
-            android:id="@+id/buttonSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="clickReviewMonth"
-            android:text="@string/search"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:cornerRadius="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonData" />
 
     </LinearLayout>
 
@@ -176,10 +134,10 @@
     <CalendarView
         android:id="@+id/calendarView10"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="350dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white_30"
+        android:background="@color/Wheat"
+        android:backgroundTint="@color/Wheat"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Large"
         android:drawingCacheQuality="auto"
         android:selectedWeekBackgroundColor="#ff0000"

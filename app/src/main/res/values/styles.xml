@@ -2,6 +2,7 @@
 <resources>
     <style name="CalenderViewCustom" parent="Theme.AppCompat">
         <item name="colorAccent">@color/white_30</item>
+        <item name="android:colorPrimaryDark">@color/Purple2</item>
     </style>
 
     <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
@@ -11,4 +12,5 @@
     <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
         <item name="android:textColor">@color/white_30</item>
     </style>
+
 </resources>

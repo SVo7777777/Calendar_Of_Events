@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Calendar Of Events</string>
+    <string name="app_name">Календарь событий</string>
+    <string name="splash_name">Мой календарь событий</string>
     <string name="add">ВНЕСТИ</string>
     <string name="review">ПРОССМОТРЕТЬ</string>
-    <string name="reset">СБРОС</string>
+    <string name="reset">СБРОСИТЬ</string>
     <string name="data">ПО ДАТЕ</string>
     <string name="search">ПО МЕСЯЦУ</string>
-    <string name="editTextInput"> введите слово </string>
+    <string name="editTextInput"> Поиск по слову. Введите слово. </string>
     <string name="dialog_message">dialog_message</string>
     <string name="dialog_title">dialog_title</string>
     <string name="toolbar_name">Калькулятор часов</string>
@@ -13,5 +14,9 @@
     <string name="descript">input and output</string>
     <string name="settings_menu">Настройки</string>
     <string name="about_menu">О программе</string>
+    <string name="save_menu">Сохранить</string>
+    <string name="for_the_year">Смотрим за год</string>
+    <string name="review_name">Все события</string>
+
 
 </resources>

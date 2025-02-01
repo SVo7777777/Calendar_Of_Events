@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/review"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/Wheat"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:layout_weight="1"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine2"
-        android:layout_width="match_parent"
-        android:layout_height="578dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine" />
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="45dp"
         android:layout_weight="1"
-        android:text="TextView"
+        android:background="@color/Wheat"
+        android:textColor="#3F51B5"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine2"
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+        android:layout_weight="1"
+        android:background="@color/Wheat"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/descript"
+        android:inputType="textMultiLine"
+        android:textColor="@color/Purple"
         android:textSize="20sp"
         android:textStyle="bold" />
+
 </LinearLayout>
