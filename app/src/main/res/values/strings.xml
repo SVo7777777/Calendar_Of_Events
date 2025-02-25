@@ -11,12 +11,23 @@
     <string name="dialog_title">dialog_title</string>
     <string name="toolbar_name">Калькулятор часов</string>
     <string name="stroka">Вы сделали правильный выбор</string>
-    <string name="descript">input and output</string>
+    <string name="descript">Выберите дату и запишите событие.</string>
     <string name="settings_menu">Настройки</string>
     <string name="about_menu">О программе</string>
     <string name="save_menu">Сохранить</string>
+    <string name="view_menu">Другой вид</string>
     <string name="for_the_year">Смотрим за год</string>
     <string name="review_name">Все события</string>
+    <string name="sunday">вс</string>
+    <string name="monday">пн</string>
+    <string name="tuesday">вт</string>
+    <string name="wednesday">ср</string>
+    <string name="thursday">чт</string>
+    <string name="friday">пт</string>
+    <string name="saturday">сб</string>
+    <string name="button_text">0</string>
+    <string name="atantion">"Запишите событие, а потом внесите! "</string>
+    <string name="previous">   </string>
 
 
 </resources>

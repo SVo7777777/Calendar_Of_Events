@@ -2,6 +2,8 @@ package com.example.calendarofevents;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +22,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class ReviewOYear extends AppCompatActivity {
 
     boolean addRecord;
-    EditText textMultiline;
+    TextView textMultiline;
     TextView textView;
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -33,8 +36,12 @@ public class ReviewOYear extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_ondata);
 
+        //верхняя полоса с названием и 3мя точками
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); // Use the toolbar as the app bar
+        //цвет для 3ёх точек и для названия
+        Objects.requireNonNull(toolbar.getOverflowIcon()).setColorFilter(Color.WHITE , PorterDuff.Mode.SRC_ATOP);
+
         //toolbar.setTitle("hello");
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.review), (v, insets) -> {
@@ -76,6 +83,7 @@ public class ReviewOYear extends AppCompatActivity {
 
 
                     }
+                    //
                     textMultiline.setText(sb.toString());
                     if (sb.length() == 0) {
                         textMultiline.setText("   НЕТ СОБЫТИЙ ЗА ЭТОТ ГОД!");
@@ -97,7 +105,7 @@ public class ReviewOYear extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu); // Replace 'menu_main' with your menu resource name
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

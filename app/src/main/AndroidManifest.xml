@@ -26,9 +26,6 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityTwo"
-            android:exported="false" />
-        <activity
             android:name=".AboutActivity"
             android:exported="false" />
         <activity
@@ -38,10 +35,16 @@
             android:name=".ReviewOYear"
             android:exported="false" />
         <activity
+            android:name=".ReviewOWeek"
+            android:exported="false" />
+        <activity
             android:name=".ReviewOnMonth"
             android:exported="false" />
         <activity
             android:name=".SaveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarView"
             android:exported="false" />
 
         <meta-data

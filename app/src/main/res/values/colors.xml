@@ -9,5 +9,10 @@
     <color name="green">#008000</color>
     <color name="Purple2">#7A0671</color>
     <color name="colorPrimaryDark">#7A0671</color>
+    <color name="myAwesomeColor">#FFFFFFFF</color>
+    <color name="orange_button">#FFA500</color>
+    <color name="work_day">#DEB273</color>
+    <color name="weekend_day">#8E6427</color>
+    <color name="DeepSkyBlue">#00BFFF</color>
 
 </resources>

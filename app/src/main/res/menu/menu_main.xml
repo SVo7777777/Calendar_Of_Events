@@ -13,4 +13,8 @@
         android:id="@+id/action_about"
         android:title="@string/about_menu"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_view"
+        android:title="@string/view_menu"
+        app:showAsAction="never" />
 </menu>

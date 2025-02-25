@@ -1,26 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/review"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/Wheat"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
+    <TextView
+        android:id="@+id/year"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="2dp"
+        android:text="2025"
+        android:textColor="@color/Purple2"
+        android:textColorHint="#FFF"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="0dp"
+        android:paddingBottom="2dp"
+        android:text="ФЕВРАЛЬ"
+        android:textColor="@color/Purple2"
+        android:textColorHint="#FFF"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-25dp"
+        android:layout_marginBottom="-25dp"
+        android:gravity="center|top"
+        android:text="16"
+        android:textColor="@color/Purple2"
+        android:textColorHint="#FFF"
+        android:textSize="100sp"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/day_of_weeks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="0dp"
+        android:paddingBottom="5dp"
+        android:text="ВОСКРЕСЕНЬЕ"
+        android:textColor="@color/Purple2"
+        android:textColorHint="#FFF"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/editTextTextMultiLine"
         android:layout_width="match_parent"
-        android:layout_height="578dp"
-        android:layout_weight="1"
+        android:layout_height="243dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/event_edit_border"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine" />
+        android:hint="@string/atantion"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/Purple2"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ВНЕСТИ" />
+
 </LinearLayout>

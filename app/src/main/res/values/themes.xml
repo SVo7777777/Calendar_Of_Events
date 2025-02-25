@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CalendarOfEvents" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+        <!-- Customize your light theme here.
+        цвет полосы самой верхней и всех кнопок по умолчанию -->
         <item name="colorPrimary">@color/Purple2</item>
+        <item name="colorControlNormal">#fff</item>
+
 
     </style>
 

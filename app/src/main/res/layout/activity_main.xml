@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:background="@color/Wheat"
@@ -28,16 +28,26 @@
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
+    <SearchView
+        android:id="@+id/simpleSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/editTextInput">
+
+        <requestFocus />
+    </SearchView>
+
     <EditText
         android:id="@+id/editTextTextMultiLine8"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="247dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="1dp"
         android:background="@color/white"
-        android:contentDescription="@string/data"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="@string/descript"
         android:inputType="textMultiLine"
         android:labelFor="@id/calendarView10"
         android:textColor="@color/Purple"
@@ -69,7 +79,7 @@
             android:textSize="20sp"
             android:textStyle="normal"
             app:cornerRadius="0dp"
-            tools:ignore="OnClick" />
+            tools:ignore="OnClick,TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/buttonReset"
@@ -82,13 +92,14 @@
             android:text="@string/reset"
             android:textSize="20sp"
             android:textStyle="normal"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
     <Spinner
         android:id="@+id/menu_review"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:background="@color/white"
         android:backgroundTint="?attr/colorPrimary"
         android:textAlignment="center"
@@ -107,28 +118,7 @@
         android:id="@+id/months_container3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <EditText
-            android:id="@+id/editTextInput"
-            android:layout_width="165dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginRight="2dp"
-            android:layout_weight="0.5"
-            android:background="@color/white"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/editTextInput"
-            android:inputType="text"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonReset" />
-
-
-    </LinearLayout>
+        android:orientation="horizontal" />
 
 
     <CalendarView
@@ -145,6 +135,7 @@
         android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Display1"
         android:weekNumberColor="#0000ff"
         android:weekSeparatorLineColor="#00ff00"
+        android:focusedMonthDateColor="#ff0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
