@@ -519,6 +519,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+
     //проссмотр содержимого файла "event_diary.txt"
 
     }

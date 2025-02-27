@@ -3,6 +3,7 @@ package com.example.calendarofevents;
 import static android.graphics.Color.*;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -27,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -107,11 +109,11 @@ public class CalendarView extends AppCompatActivity{
         Calendar c = Calendar.getInstance();
         c.set(current_year, current_month, 1);
         int day_of_week = c.get(Calendar.DAY_OF_WEEK);
-        int dateEnd = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int dateEnd = c.getActualMaximum(Calendar.DAY_OF_MONTH);
         System.out.println(dateEnd);
-        int dayOfWeekOfFirstDayOfMonth = calendar.get(Calendar.DAY_OF_WEEK);
+        int dayOfWeekOfFirstDayOfMonth = c.get(Calendar.DAY_OF_WEEK);
         System.out.println(dayOfWeekOfFirstDayOfMonth);
-        int  week_of_year = calendar.get(Calendar.WEEK_OF_YEAR);
+        int  week_of_year = c.get(Calendar.WEEK_OF_YEAR);
         System.out.println(week_of_year);
         //int day_of_week = calendar.getFirstDayOfWeek();
         System.out.println(day_of_week);
@@ -139,6 +141,9 @@ public class CalendarView extends AppCompatActivity{
 
             }
 
+        for (int i = 1; i < 7; i++){
+            onWeekMonthClick(number_of_week[i]);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -191,26 +196,30 @@ public class CalendarView extends AppCompatActivity{
                         Calendar c = Calendar.getInstance();
                         c.set(Integer.parseInt(year.getText().toString()), Arrays.asList(monthNames).indexOf((String) month.getText()), d);
                         String sDate = sdf.format(c.getTime());
+                        boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
 
+                        if (exists) {
+                            try (FileInputStream fis = openFileInput("event_diary.txt");
+                                 InputStreamReader isr = new InputStreamReader(fis);
+                                 BufferedReader br = new BufferedReader(isr)) {
+                                String line;
 
-                        try (FileInputStream fis = openFileInput("event_diary.txt");
-                             InputStreamReader isr = new InputStreamReader(fis);
-                             BufferedReader br = new BufferedReader(isr)) {
-                            String line;
-
-                            while ((line = br.readLine()) != null) {
-                                boolean contains = line.contains(sDate);
-                                if (contains) {
-                                    events[i][j].setText("event");
-                                    System.out.println("sDate="+sDate);
-                                    break;
+                                while ((line = br.readLine()) != null) {
+                                    boolean contains = line.contains(sDate);
+                                    if (contains) {
+                                        events[i][j].setText("event");
+                                        System.out.println("sDate="+sDate);
+                                        break;
+                                    }
                                 }
+
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
+                        }else {
+                            Toast.makeText(this, "В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!", Toast.LENGTH_LONG).show();
 
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
                         }
-
 
                         if (j==6 || j == 7){
                             buttons[i][j].setBackgroundColor(buttons[i][j].getContext().getResources().getColor(R.color.weekend_day));
@@ -239,6 +248,50 @@ public class CalendarView extends AppCompatActivity{
             }
         }
 
+    }
+    public void onWeekMonthClick(TextView btn) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+            @Override
+            public void onClick(View v) {
+                System.out.println(btn.getText());
+                String[] week_days;
+                String result = "";
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                int week = Integer.parseInt((String) btn.getText());
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.WEEK_OF_YEAR, week);
+                cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                int week_start_day = cal.getFirstDayOfWeek();
+                System.out.println(format.format(cal.getTime()));
+                for (int i = week_start_day; i < week_start_day + 7; i++) {
+                    cal.set(Calendar.DAY_OF_WEEK, i);
+                    result += new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime()) + " ";
+                }
+                System.out.println(result);
+                week_days = result.split(" ");
+                System.out.println(Arrays.toString(week_days));
+                Intent intent = new Intent(CalendarView.this, ReviewOWeek.class);
+                Bundle args = new Bundle();
+                args.putSerializable("ARRAYLIST",(Serializable)week_days);
+                intent.putExtra("BUNDLE",args);
+                intent.putExtra("week", week);
+                //intent.putExtra("week_days", week_days);
+
+                startActivity(intent);
+
+            }
+        });
+    }
+    public void onReviewMonthClick(View view) {
+        Intent intent2 = new Intent(CalendarView.this, ReviewOnMonth.class);
+        @SuppressLint("SimpleDateFormat")
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(Integer.parseInt(year.getText().toString()), Arrays.asList(monthNames).indexOf((String) month.getText()), 1);
+        String data = sdf.format(c.getTime());
+        intent2.putExtra("data", data);
+        startActivity(intent2);
     }
     public void onPreviousMonthClick(View view)
     {
@@ -347,6 +400,7 @@ public class CalendarView extends AppCompatActivity{
                     view = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_review, null);
                     EditText event = view.findViewById(R.id.editTextTextMultiLine);
                     Button add = view.findViewById(R.id.button);
+                    Button close = view.findViewById(R.id.close);
                     TextView number = view.findViewById(R.id.number);
                     number.setText(day1.getText());
                     TextView year1 = view.findViewById(R.id.year);
@@ -363,65 +417,73 @@ public class CalendarView extends AppCompatActivity{
                     c.set(Integer.parseInt(year.getText().toString()), Arrays.asList(monthNames).indexOf((String) month.getText()), Integer.parseInt((String) number.getText()));
                     String sDate = sdf.format(c.getTime());
                     event.setText(sDate+": ");
+                    boolean exists = FileEmpty.fileExistsInSD("event_diary.txt");
+                    if (exists) {
+                        StringBuilder sb = new StringBuilder();
+                        try (FileInputStream fis = openFileInput("event_diary.txt");
+                             InputStreamReader isr = new InputStreamReader(fis);
+                             BufferedReader br = new BufferedReader(isr)) {
+                            String line;
 
-                    StringBuilder sb = new StringBuilder();
-                    try (FileInputStream fis = openFileInput("event_diary.txt");
-                         InputStreamReader isr = new InputStreamReader(fis);
-                         BufferedReader br = new BufferedReader(isr)) {
-                        String line;
-
-                        while ((line = br.readLine()) != null) {
-                            boolean contains = line.contains(sDate);
-                            if (contains) {
-                                String day = line.substring(0, 11);
-                                String event1 = line.substring(11);
-                                String str =  "<font color=\"#0000FF\">"  + day + "</font>" + event1+ " <br>";
-                                sb.append(str);
+                            while ((line = br.readLine()) != null) {
+                                boolean contains = line.contains(sDate);
+                                if (contains) {
+                                    String day = line.substring(0, 11);
+                                    String event1 = line.substring(11);
+                                    String str =  "<font color=\"#0000FF\">"  + day + "</font>" + event1+ " <br>";
+                                    sb.append(str);
+                                }
                             }
+                            event.setText(Html.fromHtml(String.valueOf(sb), Html.FROM_HTML_MODE_LEGACY));
+                            if (sb.length() == 0) {
+                                event.setHint(sDate + " нет событий за этот день!");
+                                //дата синяя
+//                                String str = "<font color=\"#0000FF\">" + sDate+": " + "</font>" + " нет событий за этот день!";
+//                                event.setHint(Html.fromHtml(str, Html.FROM_HTML_MODE_LEGACY));
+//
+                                //textMultiline.setText(Html.fromHtml("<font color=\"#0000FF\">" + data  + "</font>"+ " нет событий за этот день!"));
+
+
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                        event.setText(Html.fromHtml(String.valueOf(sb), Html.FROM_HTML_MODE_LEGACY));
-                        if (sb.length() == 0) {
-                            //textMultiline.setText(data + " нет событий за этот день!");
-                            //дата синяя
-                            String str = "<font color=\"#0000FF\">" + sDate+": " + "</font>" + " нет событий за этот день!";
-                            event.setHint(Html.fromHtml(str, Html.FROM_HTML_MODE_LEGACY));
+                    }else {
+                        event.setHint(R.string.file_exist);
 
-                            //textMultiline.setText(Html.fromHtml("<font color=\"#0000FF\">" + data  + "</font>"+ " нет событий за этот день!"));
-
-
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
-
 
                     add.setOnClickListener(new View.OnClickListener() {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onClick(View view) {
                             String data = String.valueOf(event.getText());
+                            System.out.println("data="+data);
                             event1.setText("event");
                             //сохранение события в (базу данных) пока в текстовый файл
                             try (FileOutputStream fos = openFileOutput("event_diary.txt", MODE_APPEND);
                                  OutputStreamWriter osw = new OutputStreamWriter(fos)) {
                                 //String data = String.valueOf(textMultiline.getText());
-                                osw.write(data+"\n");
+                                osw.write(sDate+": "+data+"\n");
                                 //вывод диалогового окна, что запись внесена
                                 CustomDialogFragment dialog2 = new CustomDialogFragment();
                                 dialog2.show(getSupportFragmentManager(), "custom");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();//display the text of button1
+                            //Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();//display the text of button1
                         }
                     });
-
-
-
-
                     builder.setView(view);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
+
+                    close.setOnClickListener(new  View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                        }
+                    });
 
                 }
 

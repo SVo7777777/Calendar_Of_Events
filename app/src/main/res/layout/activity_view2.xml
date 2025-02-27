@@ -56,8 +56,10 @@
             android:layout_weight="1"
             android:paddingStart="1dp"
             android:paddingEnd="1dp"
+            android:onClick="onReviewMonthClick"
             android:text="февраль"
-            app:cornerRadius="0dp" />
+            app:cornerRadius="0dp"
+            tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/next_month"
@@ -96,7 +98,7 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/button12"
+            android:id="@+id/next_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -185,48 +187,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="1"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/numweek_2"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="2"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/numweek_3"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="3"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/numweek_4"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="4"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/numweek_5"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="5"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/numweek_6"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:gravity="center"
+                android:onClick="onWeekMonthClick"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="6"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="OnClick" />
         </LinearLayout>
 
         <androidx.gridlayout.widget.GridLayout

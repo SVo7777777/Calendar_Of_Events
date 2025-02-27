@@ -28,6 +28,7 @@
     <string name="button_text">0</string>
     <string name="atantion">"Запишите событие, а потом внесите! "</string>
     <string name="previous">   </string>
+    <string name="file_exist">В Вашем календаре пока нет событий! Выберите дату, запишите событие  и внесите!</string>
 
 
 </resources>
